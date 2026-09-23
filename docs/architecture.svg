@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="920" viewBox="0 0 1500 920">
+<defs>
+<marker id="a" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L10,3 L0,6 z" fill="#334155"/></marker>
+<style>
+.box{fill:#fff;stroke:#334155;stroke-width:2}.aws{fill:#fff7ed;stroke:#ea580c;stroke-width:2}.data{fill:#eff6ff;stroke:#2563eb;stroke-width:2}.sec{fill:#f0fdf4;stroke:#16a34a;stroke-width:2}.t{font-family:Arial,sans-serif;fill:#0f172a}.title{font-size:18px;font-weight:bold}.small{font-size:14px}.arr{stroke:#334155;stroke-width:2;fill:none;marker-end:url(#a)}
+</style></defs>
+<rect width="1500" height="920" fill="#f8fafc"/>
+<text x="750" y="42" text-anchor="middle" class="t" style="font-size:28px;font-weight:bold">Serverless Image Processing Pipeline</text>
+<text x="750" y="70" text-anchor="middle" class="t small">S3 → SQS → Lambda → Step Functions → S3 / DynamoDB / SNS → CloudFront</text>
+
+<rect x="45" y="125" width="180" height="90" rx="14" class="box"/><text x="135" y="160" text-anchor="middle" class="t title">Client</text><text x="135" y="186" text-anchor="middle" class="t small">Browser / App</text>
+<rect x="285" y="125" width="210" height="90" rx="14" class="aws"/><text x="390" y="160" text-anchor="middle" class="t title">API Gateway</text><text x="390" y="186" text-anchor="middle" class="t small">POST /upload-url</text>
+<rect x="555" y="125" width="225" height="90" rx="14" class="data"/><text x="667" y="160" text-anchor="middle" class="t title">Lambda</text><text x="667" y="186" text-anchor="middle" class="t small">Pre-signed URL</text>
+<rect x="840" y="125" width="250" height="90" rx="14" class="data"/><text x="965" y="160" text-anchor="middle" class="t title">S3 Source Bucket</text><text x="965" y="186" text-anchor="middle" class="t small">incoming/ originals</text>
+<path d="M225 170 H285" class="arr"/><path d="M495 170 H555" class="arr"/><path d="M780 170 H840" class="arr"/>
+
+<rect x="840" y="285" width="250" height="90" rx="14" class="aws"/><text x="965" y="320" text-anchor="middle" class="t title">SQS Processing Queue</text><text x="965" y="346" text-anchor="middle" class="t small">burst buffer + retry</text><path d="M965 215 V285" class="arr"/>
+<rect x="1140" y="285" width="250" height="90" rx="14" class="aws"/><text x="1265" y="320" text-anchor="middle" class="t title">SQS DLQ</text><text x="1265" y="346" text-anchor="middle" class="t small">failed messages</text><path d="M1090 330 H1140" class="arr"/>
+
+<rect x="510" y="435" width="270" height="100" rx="14" class="data"/><text x="645" y="472" text-anchor="middle" class="t title">Lambda Queue Consumer</text><text x="645" y="498" text-anchor="middle" class="t small">validate event</text><text x="645" y="519" text-anchor="middle" class="t small">start workflow</text><path d="M840 330 C720 330 670 370 645 435" class="arr"/>
+<rect x="850" y="435" width="300" height="100" rx="14" class="aws"/><text x="1000" y="472" text-anchor="middle" class="t title">Step Functions Standard</text><text x="1000" y="498" text-anchor="middle" class="t small">Validate → Resize → Watermark</text><text x="1000" y="519" text-anchor="middle" class="t small">Store → Metadata → Notify</text><path d="M780 485 H850" class="arr"/>
+
+<rect x="170" y="635" width="250" height="95" rx="14" class="data"/><text x="295" y="672" text-anchor="middle" class="t title">Lambda Image Processor</text><text x="295" y="698" text-anchor="middle" class="t small">Pillow Layer</text><path d="M850 500 C650 580 500 620 420 670" class="arr"/>
+<rect x="500" y="635" width="250" height="95" rx="14" class="data"/><text x="625" y="672" text-anchor="middle" class="t title">S3 Destination</text><text x="625" y="698" text-anchor="middle" class="t small">thumbnail + full image</text><path d="M1000 535 C900 610 780 650 750 680" class="arr"/>
+<rect x="830" y="635" width="250" height="95" rx="14" class="sec"/><text x="955" y="672" text-anchor="middle" class="t title">DynamoDB</text><text x="955" y="698" text-anchor="middle" class="t small">metadata + job status</text><path d="M1000 535 V635" class="arr"/>
+<rect x="1160" y="635" width="220" height="95" rx="14" class="sec"/><text x="1270" y="672" text-anchor="middle" class="t title">SNS</text><text x="1270" y="698" text-anchor="middle" class="t small">success / failure</text><path d="M1080 535 C1160 575 1210 605 1270 635" class="arr"/>
+
+<rect x="500" y="790" width="250" height="85" rx="14" class="aws"/><text x="625" y="824" text-anchor="middle" class="t title">CloudFront</text><text x="625" y="850" text-anchor="middle" class="t small">global cached delivery</text><path d="M625 730 V790" class="arr"/>
+<rect x="830" y="790" width="250" height="85" rx="14" class="sec"/><text x="955" y="824" text-anchor="middle" class="t title">CloudWatch</text><text x="955" y="850" text-anchor="middle" class="t small">logs + metrics + alarms</text><path d="M1080 535 C1100 650 1030 750 955 790" class="arr"/>
+<text x="55" y="900" class="t small">Security: private S3 buckets • CloudFront OAC • least-privilege IAM • encryption at rest • HTTPS</text>
+</svg>
