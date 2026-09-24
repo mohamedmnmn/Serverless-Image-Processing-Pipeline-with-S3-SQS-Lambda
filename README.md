@@ -36,49 +36,6 @@ Processed images are stored in a separate S3 destination bucket and delivered to
 
 ![Serverless Image Processing Pipeline Architecture](./architecture.jpg)
 
-### Architecture flow
-
-```text
-Client
-  |
-  v
-API Gateway
-  |
-  v
-Lambda - Pre-signed URL
-  |
-  v
-S3 Source Bucket
-  |
-  | Object Created
-  v
-SQS Processing Queue -----> SQS DLQ
-  |
-  v
-Lambda Queue Consumer
-  |
-  v
-Step Functions Standard
-  |
-  +--> Validate
-  |
-  +--> Resize + Watermark (Lambda + Pillow)
-  |
-  +--> Store processed images
-  |
-  +--> DynamoDB metadata/status
-  |
-  +--> SNS success/failure
-  |
-  v
-S3 Destination Bucket
-  |
-  v
-CloudFront
-  |
-  v
-Users
-```
 
 # AWS Services
 
