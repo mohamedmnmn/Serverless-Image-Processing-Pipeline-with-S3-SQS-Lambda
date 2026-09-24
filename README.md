@@ -34,7 +34,7 @@ Processed images are stored in a separate S3 destination bucket and delivered to
 
 # Architecture Diagram
 
-![Serverless Image Processing Pipeline Architecture](./architecture.svg)
+![Serverless Image Processing Pipeline Architecture](./architecture.jpg)
 
 ### Architecture flow
 
@@ -265,13 +265,13 @@ Environment-specific values such as bucket names, AWS Region, CloudFront distrib
 ```text
 .
 ├── README.md
-├── architecture.svg
+├── architecture.jpg
 ├── .gitignore
 ├── deployment/
 │   └── README.md
 ├── docs/
 │   ├── architecture-notes.md
-│   └── architecture.svg
+│   └── architecture.jpg
 └── source/
     ├── README.md
     └── image_processor/

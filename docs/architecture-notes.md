@@ -1,5 +1,7 @@
 # Architecture Notes
 
+![Architecture Diagram](./architecture.jpg)
+
 ## Request path
 
 The upload request is split into two operations:
